@@ -1,0 +1,34 @@
+{% extends 'detail_base.html' %}
+
+{% block inlinestyling %}
+<style>
+    body {
+        background-color: #F9C74F;
+    }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+{{game.game}}
+{% endblock %}
+
+{% block contentsubtitle %}
+{{game.get_difficulty_level_display}}
+{% endblock %}
+
+{% block editdelete %}
+<a href="{% url 'game_edit' pk=game.pk %}">Edit</a> | <a href="{% url 'game_delete' pk=game.pk %}">Delete</a>
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-full">
+        <h4 class="title is-4 is-lowercase has-text-centered">Associated Curricula</h4>
+        {% for curriculum in game.associated_curriculum.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'detail_base.html' %}
+
+{% block inlinestyling %}
+<style>
+    body {
+        background-color: #90BE6D;
+    }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+Note for <a href="{% url 'student_detail' pk=note.student.pk %}">{{note.student}}</a>
+{% endblock %}
+
+{% block contentsubtitle %}
+CREATED ON {{note.created_on}}
+{% endblock %}
+
+{% block editdelete %}
+<a href="{% url 'note_edit' pk=note.pk %}">Edit</a> | <a href="{% url 'note_delete' pk=note.pk %}">Delete</a>
+{% endblock %}
+
+{% block content %}
+<h3 class="subtitle is-5 has-text-centered">{{note}}</h3>
+{% endblock %}

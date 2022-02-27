@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #F94144;
+    }
+</style>
+
+<div class="columns mt-6 pt-6 ml-6 mr-6 mb-6">
+    <div class="column is-one-third mb-6"></div>
+    <div class="column is-one-third mb-6">
+        <form class="box" method="POST" enctype="multipart/form-data" nonvalidate>
+            {% csrf_token %}
+            <h1 class="title">New Concept</h1>
+            {% for field in form.visible_fields %}
+                <div class="field mb-6">
+                    <label class="label">{{field.label_tag}}</label>
+                    <div class="control">
+                        {{ field }}
+                        {{ field.help_text }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="save btn btn-secondary">Create</button>
+        </form>
+    </div>
+    <div class="column is-one-third mb-6"></div>
+</div>
+{% endblock %}

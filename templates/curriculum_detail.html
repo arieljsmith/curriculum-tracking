@@ -1,0 +1,136 @@
+{% extends 'detail_base.html' %}
+
+{% block inlinestyling %}
+<style>
+    body {
+        background-color: #F3722C;
+    }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+{{curriculum}}
+{% endblock %}
+
+{% block contentsubtitle %}
+{{curriculum.english_title}}
+{% endblock %}
+
+{% block editdelete %}
+<a href="{% url 'curriculum_edit' pk=curriculum.pk %}">Edit</a> | <a href="{% url 'curriculum_delete' pk=curriculum.pk %}">Delete</a>
+{% endblock %}
+
+{% block content %}
+<div class="columns ml-1 mr-2 is-multiline">
+    <div class="column is-half">
+        <h4 class="title is-4 is-lowercase has-text-centered">Vocabulary <button class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-word-modal">+</button></h4>
+        {% for word in curriculum.associated_vocab.all %}
+        <div class="box ajs-inner-box">
+            <p class="title"><a href="{% url 'word_detail' pk=word.pk %}">{{word}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="column is-half">
+        <h4 class="title is-4 is-lowercase has-text-centered">Concepts <button class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-concept-modal">+</button></h4>
+        {% for concept in curriculum.associated_concepts.all %}
+        <div class="box ajs-inner-box">
+            <p class="title"><a href="{% url 'concept_detail' pk=concept.pk %}">{{concept}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-full">
+        <h4 class="title is-4 is-lowercase has-text-centered">Games <button
+                    class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-game-modal">+</button></h4>
+        {% for game in curriculum.associated_games.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'game_detail' pk=game.pk %}">{{game.game}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-full">
+        <h4 class="title is-4 is-lowercase has-text-centered">Objectives <button
+                    class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-objective-modal">+</button></h4>
+        {% for objective in curriculum.associated_objectives.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'objective_detail' pk=objective.pk %}">{{objective}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Add Word Modal-->
+<div id="add-word-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>ADD Vocabulary</p>
+            <form id='word-form' action="{% url 'ajax_word_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ word_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Add Concept Modal-->
+<div id="add-concept-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>Add Concept</p>
+            <form id='concept-form' action="{% url 'ajax_concept_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ concept_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Add Game Modal-->
+<div id="add-game-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>Add Game</p>
+            <form id='game-form' action="{% url 'ajax_game_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ game_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Add Objective Modal-->
+<div id="add-objective-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>Add Game</p>
+            <form id='objective-form' action="{% url 'ajax_objective_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ objective_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}

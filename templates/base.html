@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'scripts/main.js' %}" defer></script>
+    <title>Language Curriculum Tracking</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+</head>
+
+<body class="has-navbar-fixed-top">
+    <header>
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'index' %}">
+                    <img class="mr-2" src="{% static 'images/logo_68x68.png' %}">
+                    <h1 class="has-text-weight-light is-size-4">CURRICULUM TRACKING</h1>
+                </a>
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary" href="/admin/">
+                                Admin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+    {% block content %}
+    {% endblock %}
+    </main>
+
+    <footer class="ajs-footer-mod">
+        <div class="content has-text-centered">
+            <p>
+                <small>Made with 💖 by Ariel Smith</small>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

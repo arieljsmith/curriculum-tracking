@@ -1,0 +1,33 @@
+{% extends 'detail_base.html' %}
+
+{% block inlinestyling %}
+<style>
+    body {
+        background-color: #845B93;
+    }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+{{word.word}}
+{% endblock %}
+
+{% block contentsubtitle %}
+{% endblock %}
+
+{% block editdelete %}
+<a href="{% url 'word_edit' pk=word.pk %}">Edit</a> | <a href="{% url 'word_delete' pk=word.pk %}">Delete</a>
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-full">
+        <h4 class="title is-4 is-lowercase has-text-centered">Associated Curricula</h4>
+        {% for curriculum in word.associated_curriculum.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

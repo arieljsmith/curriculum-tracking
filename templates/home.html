@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #F8961E;
+    }
+ </style>
+
+<div class="columns mt-6 mr-2 ml-2">
+    <div class="column is-one-third ml-2 mr-2">
+                <p class="title has-text-white is-uppercase">Curriculum <button class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-curriculum-modal">+</button></p>
+        {% for curriculum in curricula %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="column is-two-thirds is-multiline">
+        <p class="title has-text-white is-uppercase ml-4">Students <button class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod js-modal-trigger" data-target="add-student-modal">+</button></p>
+        <div class="columns is-multiline mr-2 ml-2">
+            {% for student in students %}
+            <div class="column is-half is-multiline">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title">
+                            <a href="{% url 'student_detail' pk=student.pk %}">{{student}}</a>
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                            <span>
+                                {{student.birthdate}}
+                            </span>
+                        </p>
+                        <p class="card-footer-item">
+                            <span>
+                                {{student.get_current_level_display}}
+                            </span>
+                        </p>
+                    </footer>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<!--
+  __  __  ___  ____    _    _     ____  
+ |  \/  |/ _ \|  _ \  / \  | |   / ___| 
+ | |\/| | | | | | | |/ _ \ | |   \___ \ 
+ | |  | | |_| | |_| / ___ \| |___ ___) |
+ |_|  |_|\___/|____/_/   \_\_____|____/
+-->
+
+<!-- Add Curriculum Modal-->
+<div id="add-curriculum-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>ADD CURRICULUM</p>
+            <form id='curriculum-form' action="{% url 'ajax_curriculum_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ curriculum_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Add Student Modal-->
+<div id="add-student-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+        <div class="box">
+            <p>ADD STUDENT</p>
+            <form id='student-form' action="{% url 'ajax_student_new' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ student_form.as_p }}
+                    <button type="submit" class="save btn btn-secondary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}

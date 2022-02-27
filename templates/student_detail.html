@@ -1,0 +1,60 @@
+{% extends 'detail_base.html' %}
+
+{% block inlinestyling %}
+<style>
+    body {
+        background-color: #3C759F;
+    }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+{{student}}
+{% endblock %}
+
+{% block contentsubtitle %}
+{{student.get_age}} years | {{student.get_current_level_display}}
+{% endblock %}
+
+{% block editdelete %}
+<a href="{% url 'student_edit' pk=student.pk %}">Edit</a> | <a
+    href="{% url 'student_delete' pk=student.pk %}">Delete</a>
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-half">
+        <h4 class="title is-4 is-lowercase">Curriculum Covered</h4>
+        {% for curriculum in student.curriculum_covered.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+        <h4 class="title is-4 is-lowercase">Partially Covered</h4>
+        {% for curriculum in student.curriculum_partially_covered.all %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="column is-half">
+        <h4 class="title is-4 is-lowercase">Curriculum Not Covered</h4>
+        {% for curriculum in curriculum_not_covered %}
+        <div class="box">
+            <p class="title"><a href="{% url 'curriculum_detail' pk=curriculum.pk %}">{{curriculum}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-full">
+        <h4 class="title is-4 is-lowercase has-text-centered">Notes <a href="{% url 'note_new' %}"><button
+                    class="button is-rounded is-small ml-3 mt-1 ajs-add-button-mod">+</button></a></h4>
+        {% for note in student.note.all %}
+        <div class="box">
+            <p><a href="{% url 'note_detail' pk=note.pk %}">{{note.note}}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
