@@ -95,17 +95,13 @@ def student_detail(request, pk):
     student = get_object_or_404(Student, pk=pk)
     curricula = Curriculum.objects.all()
     student_curriculum_covered = []
-    # student_curriculum_partially_covered = []
+
     for curriculum in student.curriculum_covered.all():
         student_curriculum_covered.append(curriculum.german_title)
     for curriculum in student.curriculum_partially_covered.all():
         student_curriculum_covered.append(curriculum.german_title)
 
     deduped_student_curriculum_covered = set(student_curriculum_covered)
-    # in_student_curriculum_partially_covered = set(student_curriculum_partially_covered)
-    # in_student_curriculum_partially_covered_but_not_in_in_student_curriculum_covered = in_student_curriculum_partially_covered - in_student_curriculum_covered
-
-    # combined_covered_and_partially_covered = student_curriculum_covered + list(in_student_curriculum_partially_covered_but_not_in_in_student_curriculum_covered)
 
     curriculum_not_covered = curricula.exclude(german_title__in=deduped_student_curriculum_covered)
     return render(request, 'student_detail.html', {'student': student, 'curricula': curricula, 'curriculum_not_covered': curriculum_not_covered, 'note_form': NoteForm()})
